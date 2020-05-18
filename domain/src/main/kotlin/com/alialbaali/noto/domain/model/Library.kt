@@ -1,23 +1,23 @@
 package com.alialbaali.noto.domain.model
 
-import java.time.OffsetDateTime
-import java.time.ZoneId
+import org.joda.time.DateTime
+
 
 data class Library(
 
     val libraryId: Long = 0L,
 
-    var libraryTitle: String,
+    val libraryTitle: String,
 
-    var libraryPosition: Int,
+    val libraryPosition: Int,
 
-    var notoColor: NotoColor,
+    val notoColor: NotoColor,
 
-    var notoIcon: NotoIcon,
+    val notoIcon: NotoIcon,
 
-    var sortType: SortType = SortType.DESC,
+    val sortType: SortType = SortType.DESC,
 
-    var sortMethod: SortMethod = SortMethod.CreationDate,
+    val sortMethod: SortMethod = SortMethod.CreationDate,
 
-    val libraryCreationDate: OffsetDateTime = OffsetDateTime.now(ZoneId.systemDefault())
+    val libraryCreationDate: DateTime = DateTime.now()
 )

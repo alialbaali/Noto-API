@@ -46,12 +46,6 @@ enum class SortMethod {
     Custom
 }
 
-enum class BlockType {
-    NOTE,
-    BULLET,
-    NUMBER
-}
-
 enum class SortType {
     ASC,
     DESC

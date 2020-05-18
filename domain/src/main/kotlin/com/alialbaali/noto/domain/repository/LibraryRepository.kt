@@ -4,14 +4,12 @@ import com.alialbaali.noto.domain.model.Library
 
 interface LibraryRepository {
 
-    suspend fun createLibrary(library: Library)
+    suspend fun getLibraries(userId: Long): Result<List<Library>>
 
-    suspend fun deleteLibrary(libraryId: Long)
+    suspend fun createLibrary(userId: Long, library: Library): Result<Library>
 
-    suspend fun updateLibrary(library: Library)
+    suspend fun updateLibrary(userId: Long, library: Library): Result<Library>
 
-    suspend fun getLibraries(): Result<List<Library>>
-
-    suspend fun getLibraryById(libraryId: Long): Result<Library>
+    suspend fun deleteLibrary(userId: Long, libraryId: Long): Result<Long>
 
 }

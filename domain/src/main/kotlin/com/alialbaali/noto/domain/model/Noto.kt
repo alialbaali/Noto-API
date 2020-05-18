@@ -1,5 +1,6 @@
 package com.alialbaali.noto.domain.model
 
+import org.joda.time.DateTime
 import java.time.OffsetDateTime
 import java.time.ZoneId
 
@@ -8,15 +9,17 @@ data class Noto(
 
     val notoId: Long = 0L,
 
-    var libraryId: Long,
+    val libraryId: Long,
 
-    var notoTitle: String,
+    val notoTitle: String,
 
-    var notoPosition: Int,
+    val notoBody : String,
 
-    val notoCreationDate: OffsetDateTime = OffsetDateTime.now(ZoneId.systemDefault()),
+    val notoPosition: Int,
 
-    var notoIsStarred: Boolean = false,
+    val notoCreationDate: DateTime = DateTime.now(),
 
-    val notoSchedule: OffsetDateTime? = null
+    val notoIsStarred: Boolean = false,
+
+    val notoSchedule: DateTime? = null
 )

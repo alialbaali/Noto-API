@@ -4,6 +4,6 @@ class LabelUseCases(
     val createLabel: CreateLabel,
     val deleteLabel: DeleteLabel,
     val updateLabel: UpdateLabel,
-    val getLabel: GetLabel,
+    val getLabelById: GetLabelById,
     val getLabels: GetLabels
 )

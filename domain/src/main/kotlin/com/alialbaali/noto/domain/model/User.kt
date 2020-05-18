@@ -1,11 +1,15 @@
 package com.alialbaali.noto.domain.model
 
-class User(
-    val userId: Long,
+import org.joda.time.DateTime
 
-    val name: String,
+data class User(
+    val userId: Long = 0L,
+
+    val userDisplayName: String,
 
     val username: String,
 
-    val password: String
+    var userPassword: String,
+
+    val userCreationDate : DateTime = DateTime.now()
 )

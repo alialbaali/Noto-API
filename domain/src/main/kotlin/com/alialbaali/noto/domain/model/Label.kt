@@ -5,9 +5,9 @@ data class Label(
 
     val labelId: Long = 0L,
 
-    var labelTitle: String,
+    val labelTitle: String,
 
-    var notoColor: NotoColor
+    val notoColor: NotoColor
 )
 
 data class NotoLabel(
