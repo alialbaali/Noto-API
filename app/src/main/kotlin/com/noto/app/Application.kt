@@ -1,9 +1,11 @@
 package com.noto.app
 
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.noto.app.controller.label
 import com.noto.app.controller.library
 import com.noto.app.controller.noto
 import com.noto.app.controller.user
+import com.noto.app.service.UserService
 import com.noto.app.util.jwtVerifier
 import com.noto.app.util.respond
 import com.noto.di.*
@@ -23,6 +25,7 @@ import io.ktor.request.path
 import io.ktor.routing.routing
 import io.ktor.util.KtorExperimentalAPI
 import org.koin.ktor.ext.Koin
+import org.koin.ktor.ext.inject
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -31,15 +34,20 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.main(testing: Boolean = false) {
+
+    val userService by inject<UserService>()
+
+    initDB()
+
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
     }
-    initDB()
 
 
     install(Koin) {
         modules(
+            appModule,
             repositoryModule,
             dataSourceModule,
             userUseCasesModule,
@@ -93,7 +101,10 @@ fun Application.main(testing: Boolean = false) {
             }
 
             validate { token ->
-                // Verify user by checking the id from payload thru database
+                val userId = token.payload.getClaim("userId").asLong() ?: throw BadRequestException("Missing subject")
+
+                userService.checkUserId(userId)
+
                 JWTPrincipal(token.payload)
             }
         }
@@ -101,7 +112,7 @@ fun Application.main(testing: Boolean = false) {
 
 
     routing {
-        user()
+        user(userService)
         library()
         noto()
         label()

@@ -1,6 +1,5 @@
 package com.noto.database.model
 
-import com.alialbaali.noto.domain.model.*
 import com.noto.domain.model.NotoColor
 import com.noto.domain.model.NotoIcon
 import com.noto.domain.model.SortMethod

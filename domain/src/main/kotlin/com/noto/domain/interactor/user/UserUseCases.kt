@@ -4,5 +4,6 @@ class UserUseCases(
     val createUser: CreateUser,
     val deleteUser: DeleteUser,
     val loginUser: LoginUser,
-    val updateUser: UpdateUser
+    val updateUser: UpdateUser,
+    val checkUserId: CheckUserId
 )

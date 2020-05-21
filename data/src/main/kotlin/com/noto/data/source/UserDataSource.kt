@@ -14,4 +14,6 @@ interface UserDataSource {
 
     suspend fun getUsers(): List<User>
 
+    suspend fun checkUserId(userId: Long): Long?
+
 }

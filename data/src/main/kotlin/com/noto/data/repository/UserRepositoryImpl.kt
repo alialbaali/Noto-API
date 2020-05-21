@@ -31,4 +31,12 @@ class UserRepositoryImpl(private val source: UserDataSource) : UserRepository {
             else -> Result.success(result)
         }
     }
+
+    override suspend fun checkUserId(userId: Long): Result<Long> {
+
+        return when (source.checkUserId(userId)) {
+            null -> Result.failure(Throwable("Invalid token"))
+            else -> Result.success(userId)
+        }
+    }
 }

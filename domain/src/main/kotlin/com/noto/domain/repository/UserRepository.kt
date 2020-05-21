@@ -11,4 +11,6 @@ interface UserRepository {
     suspend fun updateUser(user: User): Result<User>
 
     suspend fun loginUser(user: User): Result<User>
+
+    suspend fun checkUserId(userId: Long) : Result<Long>
 }

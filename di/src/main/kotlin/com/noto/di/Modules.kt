@@ -12,7 +12,7 @@ import com.noto.domain.interactor.label.*
 import com.noto.domain.interactor.library.*
 import com.noto.domain.interactor.noto.*
 import com.noto.domain.interactor.user.*
-import connectDatabase
+import com.noto.database.connectDatabase
 import org.koin.dsl.module
 
 fun initDB() {
@@ -54,7 +54,7 @@ val libraryUseCasesModule = module {
 
 val userUseCasesModule = module {
 
-    single { UserUseCases(get(), get(), get(), get()) }
+    single { UserUseCases(get(), get(), get(), get(), get()) }
 
     single { CreateUser(get<UserRepositoryImpl>()) }
 
@@ -63,6 +63,8 @@ val userUseCasesModule = module {
     single { UpdateUser(get<UserRepositoryImpl>()) }
 
     single { LoginUser(get<UserRepositoryImpl>()) }
+
+    single { CheckUserId(get<UserRepositoryImpl>()) }
 }
 
 

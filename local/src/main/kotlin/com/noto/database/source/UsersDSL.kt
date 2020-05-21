@@ -58,4 +58,14 @@ class UsersDSL : UserDataSource {
             }
         }
     }
+
+    override suspend fun checkUserId(userId: Long): Long? {
+        return transaction {
+
+            Users.select { Users.userId eq userId }.map {
+                it[Users.userId]
+            }.firstOrNull()
+
+        }
+    }
 }
