@@ -101,7 +101,7 @@ fun Application.main(testing: Boolean = false) {
             }
 
             validate { token ->
-                val userId = token.payload.getClaim("userId").asLong() ?: throw BadRequestException("Missing subject")
+                val userId = token.payload.getClaim("userId").asLong() ?: throw BadRequestException("Missing claims")
 
                 userService.checkUserId(userId)
 
