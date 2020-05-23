@@ -10,7 +10,5 @@ interface NotoRepository {
 
     suspend fun updateNoto(noto: Noto)
 
-    suspend fun getNotos(libraryId: Long) : Result<List<Noto>>
-
-    suspend fun getNoto(notoId: Long): Result<Noto>
+    suspend fun getNotos(userId: Long, libraryId: Long) : Result<List<Noto>>
 }

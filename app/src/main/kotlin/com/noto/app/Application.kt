@@ -5,6 +5,8 @@ import com.noto.app.controller.label
 import com.noto.app.controller.library
 import com.noto.app.controller.noto
 import com.noto.app.controller.user
+import com.noto.app.service.LibraryService
+import com.noto.app.service.NotoService
 import com.noto.app.service.UserService
 import com.noto.app.util.jwtVerifier
 import com.noto.app.util.respond
@@ -37,10 +39,14 @@ fun Application.main(testing: Boolean = false) {
 
     val userService by inject<UserService>()
 
+//    val libraryService by inject<LibraryService>()
+
+//    val notoService by inject<NotoService>()
+
     initDB()
 
     install(CallLogging) {
-        level = Level.INFO
+        level = Level.TRACE
         filter { call -> call.request.path().startsWith("/") }
     }
 
@@ -85,7 +91,7 @@ fun Application.main(testing: Boolean = false) {
         exception<BadRequestException> { cause ->
             call.respond(HttpStatusCode.BadRequest, false, cause.message)
         }
-        exception<BadRequestException> { cause ->
+        exception<NotFoundException> { cause ->
             call.respond(HttpStatusCode.NotFound, false, cause.message)
         }
 
@@ -113,8 +119,8 @@ fun Application.main(testing: Boolean = false) {
 
     routing {
         user(userService)
-        library()
-        noto()
+//        library(libraryService)
+//        noto(notoService)
         label()
     }
 }

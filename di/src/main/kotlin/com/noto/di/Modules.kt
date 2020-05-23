@@ -70,15 +70,13 @@ val userUseCasesModule = module {
 
 val notoUseCasesModule = module {
 
-    single { NotoUseCases(get(), get(), get(), get(), get()) }
+    single { NotoUseCases(get(), get(), get(), get()) }
 
     single { CreateNoto(get<NotoRepositoryImpl>()) }
 
     single { DeleteNoto(get<NotoRepositoryImpl>()) }
 
     single { UpdateNoto(get<NotoRepositoryImpl>()) }
-
-    single { GetNotoById(get<NotoRepositoryImpl>()) }
 
     single { GetNotos(get<NotoRepositoryImpl>()) }
 }

@@ -8,9 +8,11 @@ import org.joda.time.DateTimeZone
 
 object Notos : Table("notos") {
     override val primaryKey: PrimaryKey?
-        get() = super.primaryKey
+        get() = PrimaryKey(notoId)
 
     val notoId = long("noto_id").autoIncrement()
+
+    val notoClientId = long("noto_client_id")
 
     val libraryId = long("library_id").references(
         Libraries.libraryId,

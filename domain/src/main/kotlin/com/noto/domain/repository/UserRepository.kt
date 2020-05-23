@@ -8,7 +8,7 @@ interface UserRepository {
 
     suspend fun deleteUser(userId: Long) : Result<Long>
 
-    suspend fun updateUser(user: User): Result<User>
+    suspend fun updateUser(userId: Long, user: User): Result<User>
 
     suspend fun loginUser(user: User): Result<User>
 

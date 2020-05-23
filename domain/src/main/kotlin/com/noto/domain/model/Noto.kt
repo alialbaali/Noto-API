@@ -21,5 +21,5 @@ data class Noto(
 
     val notoIsStarred: Boolean = false,
 
-    val notoSchedule: DateTime? = null
+    val notoReminder: DateTime? = null
 )

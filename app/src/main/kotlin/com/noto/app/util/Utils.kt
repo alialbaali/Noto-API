@@ -1,10 +1,11 @@
 package com.noto.app.util
 
-import com.noto.domain.model.User
-import com.noto.domain.schema.ResponseSchema
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import com.noto.domain.model.User
+import com.noto.domain.schema.ResponseSchema
+import com.noto.domain.schema.UserResponse
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
 import io.ktor.util.KtorExperimentalAPI
@@ -12,7 +13,12 @@ import io.ktor.util.hex
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
-suspend inline fun ApplicationCall.respond(status: HttpStatusCode, success: Boolean, error: String? = null, data: Any? = null) {
+suspend inline fun ApplicationCall.respond(
+    status: HttpStatusCode,
+    success: Boolean,
+    error: String? = null,
+    data: Any? = null
+) {
     val message = ResponseSchema(success, error, data)
     response.status(status)
     response.pipeline.execute(this, message)
@@ -42,4 +48,12 @@ fun User.generateToken(): String {
         .withAudience(jwtAudience)
         .withClaim("userId", userId)
         .sign(algorithm)
+}
+
+fun User.getResponse(): UserResponse {
+    return UserResponse(
+        userDisplayName,
+        username,
+        generateToken()
+    )
 }

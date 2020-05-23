@@ -12,6 +12,7 @@ application {
 }
 
 dependencies {
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin(Libraries.KOTLIN))
     implementation(Libraries.KTOR_NETTY)
     implementation(Libraries.LOG_BACK)

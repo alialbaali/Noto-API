@@ -5,22 +5,15 @@ import com.noto.domain.model.User
 import com.noto.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val source: UserDataSource) : UserRepository {
+
     override suspend fun createUser(user: User): Result<User> {
-        val users = source.getUsers()
-        return if (users.any { it.username == user.username }) {
-            Result.failure(Throwable("Username already exists"))
-        } else {
+
+        return if (source.getUserByUsername(user.username) == null) {
             source.createUser(user)
-            Result.success(source.getUsers().first { it.username == user.username })
+            Result.success(source.getUserByUsername(user.username)!!)
+        } else {
+            Result.failure(Throwable("Username already exists"))
         }
-    }
-
-    override suspend fun deleteUser(userId: Long): Result<Long> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateUser(user: User): Result<User> {
-        TODO("Not yet implemented")
     }
 
     override suspend fun loginUser(user: User): Result<User> {
@@ -32,11 +25,27 @@ class UserRepositoryImpl(private val source: UserDataSource) : UserRepository {
         }
     }
 
+    override suspend fun updateUser(userId: Long, user: User): Result<User> {
+        source.updateUser(userId, user)
+        return Result.success(source.getUserById(userId)!!)
+    }
+
     override suspend fun checkUserId(userId: Long): Result<Long> {
 
-        return when (source.checkUserId(userId)) {
-            null -> Result.failure(Throwable("Invalid token"))
-            else -> Result.success(userId)
+        return if (source.getUserById(userId) == null) {
+            Result.failure(Throwable("Invalid token"))
+        } else {
+            Result.success(userId)
+        }
+    }
+
+    override suspend fun deleteUser(userId: Long): Result<Long> {
+
+        return if (source.getUserById(userId) == null) {
+            Result.failure(Throwable("Invalid userId"))
+        } else {
+            source.delete(userId)
+            Result.success(userId)
         }
     }
 }

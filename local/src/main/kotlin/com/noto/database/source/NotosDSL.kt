@@ -1,60 +1,52 @@
 package com.noto.database.source
 
 import com.noto.data.source.NotoDataSource
-import com.noto.domain.model.Noto
+import com.noto.database.model.Libraries
 import com.noto.database.model.Notos
+import com.noto.domain.model.Noto
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 
 class NotosDSL : NotoDataSource {
-    override suspend fun createNoto(noto: Noto) {
+    override suspend fun createNoto(userId: Long, noto: Noto) {
+
+        val notoLibraryId =
+            (Libraries innerJoin Notos).select { (Libraries.userId eq userId) and (Libraries.libraryClientId eq noto.libraryId) }
+                .map {
+                    it[Libraries.libraryId]
+                }.first()
+
         transaction {
             Notos.insert {
-                it[notoId] = noto.notoId
-                it[libraryId] = noto.libraryId
+                it[notoClientId] = noto.notoId
+                it[libraryId] = notoLibraryId
                 it[notoTitle] = noto.notoTitle
                 it[notoBody] = noto.notoBody
-                it[notoPosition] = notoPosition
+                it[notoPosition] = noto.notoPosition
                 it[notoIsStarred] = noto.notoIsStarred
+                it[notoCreationDate] = noto.notoCreationDate
+                it[notoReminder] = noto.notoReminder
             }
         }
     }
 
-    override suspend fun getNotos(libraryId: Long): List<Noto> {
+    override suspend fun getNotos(userId: Long, libraryId: Long): List<Noto> {
         return transaction {
-            Notos.selectAll().map {
-                Noto(
-                    it[Notos.notoId],
-                    it[Notos.libraryId],
-                    it[Notos.notoTitle],
-                    it[Notos.notoBody],
-                    it[Notos.notoPosition]
-                )
-            }
+            (Libraries innerJoin Notos).select { (Libraries.userId eq userId) and (Libraries.libraryClientId eq Notos.libraryId) }
+                .map {
+                    Noto(
+                        it[Notos.notoClientId],
+                        it[Libraries.libraryClientId],
+                        it[Notos.notoTitle],
+                        it[Notos.notoBody],
+                        it[Notos.notoPosition],
+                        it[Notos.notoCreationDate],
+                        it[Notos.notoIsStarred],
+                        it[Notos.notoReminder]
+                    )
+                }
         }
-    }
-
-    override suspend fun getNotoById(notoId: Long): Noto {
-        return transaction {
-            Notos.select { Notos.libraryId eq notoId }.map {
-                Noto(
-                    it[Notos.notoId],
-                    it[Notos.libraryId],
-                    it[Notos.notoTitle],
-                    it[Notos.notoBody],
-                    it[Notos.notoPosition]
-                )
-            }
-        }.first()
-    }
-
-    override suspend fun countLibraryNotos(libraryId: Long): Int {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun countNotos(): Int {
-        TODO("Not yet implemented")
     }
 
     override suspend fun deleteNoto(notoId: Long) {
@@ -66,12 +58,13 @@ class NotosDSL : NotoDataSource {
     override suspend fun updateNoto(noto: Noto) {
         transaction {
             Notos.update {
-                it[notoId] = noto.notoId
+                it[notoClientId] = noto.notoId
                 it[libraryId] = noto.libraryId
                 it[notoTitle] = noto.notoTitle
                 it[notoBody] = noto.notoBody
-                it[notoPosition] = notoPosition
+                it[notoPosition] = noto.notoPosition
                 it[notoIsStarred] = noto.notoIsStarred
+                it[notoReminder] = noto.notoReminder
             }
         }
     }
