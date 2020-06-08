@@ -2,11 +2,7 @@ package com.noto.app
 
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.noto.app.controller.label
-import com.noto.app.controller.library
-import com.noto.app.controller.noto
 import com.noto.app.controller.user
-import com.noto.app.service.LibraryService
-import com.noto.app.service.NotoService
 import com.noto.app.service.UserService
 import com.noto.app.util.jwtVerifier
 import com.noto.app.util.respond
@@ -24,6 +20,7 @@ import io.ktor.features.StatusPages
 import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.jackson
 import io.ktor.request.path
+import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.util.KtorExperimentalAPI
 import org.koin.ktor.ext.Koin
@@ -78,7 +75,9 @@ fun Application.main(testing: Boolean = false) {
 //    }
 
     install(ContentNegotiation) {
-        jackson()
+        jackson {
+            enable(SerializationFeature.INDENT_OUTPUT)
+        }
     }
 
     install(StatusPages) {
@@ -118,6 +117,9 @@ fun Application.main(testing: Boolean = false) {
 
 
     routing {
+        get {
+            call.respond(HttpStatusCode.OK, true, null, "Healthy")
+        }
         user(userService)
 //        library(libraryService)
 //        noto(notoService)

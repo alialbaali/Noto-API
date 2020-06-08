@@ -7,7 +7,7 @@ import com.noto.domain.repository.NotoRepository
 class NotoRepositoryImpl(private val local: NotoDataSource) : NotoRepository {
 
     override suspend fun createNoto(noto: Noto) {
-        local.createNoto(noto)
+//        local.createNoto(noto)
     }
 
     override suspend fun deleteNoto(notoId: Long) {

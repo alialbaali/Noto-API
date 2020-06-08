@@ -8,16 +8,16 @@ class UserRepositoryImpl(private val source: UserDataSource) : UserRepository {
 
     override suspend fun createUser(user: User): Result<User> {
 
-        return if (source.getUserByUsername(user.username) == null) {
+        return if (source.getUserByEmail(user.userEmail) == null) {
             source.createUser(user)
-            Result.success(source.getUserByUsername(user.username)!!)
+            Result.success(source.getUserByEmail(user.userEmail)!!)
         } else {
-            Result.failure(Throwable("Username already exists"))
+            Result.failure(Throwable("User already exists"))
         }
     }
 
     override suspend fun loginUser(user: User): Result<User> {
-        val result = source.getUserByUsername(user.username)
+        val result = source.getUserByEmail(user.userEmail)
         return when {
             result == null -> Result.failure(Throwable("User doesn't exist"))
             result.userPassword != user.userPassword -> Result.failure(Throwable("Wrong password"))

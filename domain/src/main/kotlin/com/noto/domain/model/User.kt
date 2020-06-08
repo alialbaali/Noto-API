@@ -7,7 +7,7 @@ data class User(
 
     val userDisplayName: String,
 
-    val username: String,
+    val userEmail: String,
 
     var userPassword: String,
 

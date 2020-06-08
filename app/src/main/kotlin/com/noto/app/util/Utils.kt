@@ -12,6 +12,11 @@ import io.ktor.util.KtorExperimentalAPI
 import io.ktor.util.hex
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
+import javax.mail.Message
+import javax.mail.Session
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
+
 
 suspend inline fun ApplicationCall.respond(
     status: HttpStatusCode,
@@ -23,6 +28,19 @@ suspend inline fun ApplicationCall.respond(
     response.status(status)
     response.pipeline.execute(this, message)
 }
+
+
+//suspend inline fun <T> ApplicationCall.respond(
+//    status: HttpStatusCode,
+//    success: Boolean,
+//    error: String? = null,
+//    data: T? = null
+//) {
+//    val message = ResponseSchema<T>(success, error, data)
+//    response.status(status)
+//    response.pipeline.execute(this, message)
+//}
+
 
 @KtorExperimentalAPI
 fun String.hash(): String {
@@ -53,7 +71,46 @@ fun User.generateToken(): String {
 fun User.getResponse(): UserResponse {
     return UserResponse(
         userDisplayName,
-        username,
+        userEmail,
         generateToken()
     )
+}
+
+fun User.sendEmail() {
+    try {
+
+        val username = System.getenv("EMAIL")
+        val password = System.getenv("PASSWORD")
+        val recipient = this.userEmail
+
+
+        val host = "smtp.gmail.com"
+        val properties = System.getProperties().also { props ->
+            props["mail.smtp.starttls.enable"] = "true"
+            props["mail.smtp.host"] = host
+            props["mail.smtp.user"] = username
+            props["mail.smtp.password"] = password
+            props["mail.smtp.port"] = "587"
+            props["mail.smtp.auth"] = "true"
+        }
+
+        val session = Session.getInstance(properties)
+
+        val message = MimeMessage(session)
+
+
+        message.setFrom("noreply@noto.com")
+        message.setRecipient(Message.RecipientType.TO, InternetAddress(recipient))
+
+        message.subject = "Verification"
+        message.setText("HELLO")
+        val transport = session.getTransport("smtp")
+        transport.connect(host, username, password)
+        transport.sendMessage(message, message.allRecipients)
+        transport.close()
+
+    } catch (e: Throwable) {
+        println(e.toString())
+    }
+
 }

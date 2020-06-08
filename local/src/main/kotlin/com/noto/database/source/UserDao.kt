@@ -9,14 +9,14 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 
-class UsersDSL : UserDataSource {
+class UserDao : UserDataSource {
 
     override suspend fun createUser(user: User) {
         transaction {
 
             Users.insert {
                 it[userDisplayName] = user.userDisplayName
-                it[username] = user.username.toLowerCase()
+                it[userEmail] = user.userEmail.toLowerCase()
                 it[userPassword] = user.userPassword
             }
 
@@ -28,22 +28,22 @@ class UsersDSL : UserDataSource {
 
             Users.update(where = { Users.userId eq userId }) {
                 it[userDisplayName] = user.userDisplayName
-                it[username] = user.username.toLowerCase()
+                it[userEmail] = user.userEmail.toLowerCase()
                 it[userPassword] = user.userPassword
             }
         }
     }
 
-    override suspend fun getUserByUsername(username: String): User? {
+    override suspend fun getUserByEmail(email: String): User? {
         return transaction {
 
-            Users.select { Users.username eq username.toLowerCase() }
+            Users.select { Users.userEmail eq email.toLowerCase() }
                 .map {
                     User(
                         it[Users.userId],
                         it[Users.userDisplayName],
-                        it[Users.username],
-                        ""
+                        it[Users.userEmail],
+                        String()
                     )
                 }.firstOrNull()
 
@@ -58,8 +58,8 @@ class UsersDSL : UserDataSource {
                     User(
                         it[Users.userId],
                         it[Users.userDisplayName],
-                        it[Users.username],
-                        ""
+                        it[Users.userEmail],
+                        String()
                     )
                 }.firstOrNull()
 

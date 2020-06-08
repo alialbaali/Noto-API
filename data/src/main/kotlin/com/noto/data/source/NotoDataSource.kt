@@ -4,7 +4,7 @@ import com.noto.domain.model.Noto
 
 interface NotoDataSource {
 
-    suspend fun createNoto(noto: Noto)
+    suspend fun createNoto(userId: Long, noto: Noto)
 
     suspend fun getNotos(userId: Long, libraryId: Long): List<Noto>
 

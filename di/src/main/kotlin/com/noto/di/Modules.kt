@@ -7,7 +7,7 @@ import com.noto.data.repository.UserRepositoryImpl
 import com.noto.database.source.LabelsDSL
 import com.noto.database.source.LibrariesDSL
 import com.noto.database.source.NotosDSL
-import com.noto.database.source.UsersDSL
+import com.noto.database.source.UserDao
 import com.noto.domain.interactor.label.*
 import com.noto.domain.interactor.library.*
 import com.noto.domain.interactor.noto.*
@@ -23,7 +23,7 @@ val repositoryModule = module {
 
     single { LibraryRepositoryImpl(get<LibrariesDSL>()) }
 
-    single { UserRepositoryImpl(get<UsersDSL>()) }
+    single { UserRepositoryImpl(get<UserDao>()) }
 
     single { NotoRepositoryImpl(get<NotosDSL>()) }
 
@@ -33,7 +33,7 @@ val repositoryModule = module {
 
 val dataSourceModule = module {
 
-    single { UsersDSL() }
+    single { UserDao() }
 
     single { LibrariesDSL() }
 }

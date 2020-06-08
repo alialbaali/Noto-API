@@ -6,11 +6,11 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-private const val DB_NAME = "noto"
-private const val URL = "jdbc:postgresql://localhost:5432/$DB_NAME"
-private const val DRIVER = "org.postgresql.Driver"
-private const val USER = "postgres"
-private const val PASSWORD = "135792468"
+private val DB_NAME = System.getenv("DB_NAME")
+private val URL = System.getenv("DB_URL").plus(DB_NAME)
+private val DRIVER = System.getenv("DB_DRIVER")
+private val USER = System.getenv("DB_USERNAME")
+private val PASSWORD = System.getenv("DB_PASSWORD")
 
 
 fun connectDatabase() {
@@ -21,6 +21,6 @@ fun connectDatabase() {
         PASSWORD
     )
     transaction {
-        SchemaUtils.create(Users, Libraries)
+        SchemaUtils.create(Users)
     }
 }

@@ -10,7 +10,7 @@ interface UserDataSource {
 
     suspend fun delete(userId: Long)
 
-    suspend fun getUserByUsername(username: String): User?
+    suspend fun getUserByEmail(email: String): User?
 
     suspend fun getUserById(userId: Long) : User?
 
