@@ -1,4 +1,4 @@
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    api(kotlin(Libraries.KOTLIN))
     api(Libraries.JODA_TIME)
 }

@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     application
     kotlin("jvm")
@@ -13,15 +11,15 @@ application {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation(kotlin(Libraries.KOTLIN))
+    implementation(project(Modules.LOCAL))
+    implementation(project(Modules.DOMAIN))
+    implementation(project(Modules.DI))
+    implementation(Libraries.JAKARTA_MAIL)
     implementation(Libraries.KTOR_NETTY)
     implementation(Libraries.LOG_BACK)
     implementation(Libraries.KTOR_CORE)
     implementation(Libraries.KTOR_HOST_COMMON)
     implementation(Libraries.AUTH_JWT)
-    implementation(project(Modules.DI))
-    implementation(project(Modules.LOCAL))
     implementation(Libraries.CONTENT_NEGOTIATION)
-    implementation(project(Modules.DOMAIN))
     testImplementation(Libraries.KTOR_TEST)
 }
