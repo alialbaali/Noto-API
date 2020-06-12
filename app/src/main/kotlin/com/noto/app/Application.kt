@@ -2,7 +2,9 @@ package com.noto.app
 
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.noto.app.controller.label
+import com.noto.app.controller.library
 import com.noto.app.controller.user
+import com.noto.app.service.LibraryService
 import com.noto.app.service.UserService
 import com.noto.app.util.jwtVerifier
 import com.noto.app.util.respond
@@ -36,7 +38,7 @@ fun Application.main(testing: Boolean = false) {
 
     val userService by inject<UserService>()
 
-//    val libraryService by inject<LibraryService>()
+    val libraryService by inject<LibraryService>()
 
 //    val notoService by inject<NotoService>()
 
@@ -121,7 +123,7 @@ fun Application.main(testing: Boolean = false) {
             call.respond(HttpStatusCode.OK, true, null, "Healthy")
         }
         user(userService)
-//        library(libraryService)
+        library(libraryService)
 //        noto(notoService)
         label()
     }

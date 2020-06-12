@@ -5,6 +5,6 @@ import com.noto.domain.repository.LibraryRepository
 
 class CreateLibrary(private val libraryRepository: LibraryRepository) {
 
-    suspend operator fun invoke(userId: Long ,library: Library) = libraryRepository.createLibrary(userId, library)
+    suspend operator fun invoke(userId: Long, library: Library) = libraryRepository.createLibrary(userId, library)
 
 }

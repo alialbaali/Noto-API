@@ -4,15 +4,15 @@ import com.noto.data.repository.LabelRepositoryImpl
 import com.noto.data.repository.LibraryRepositoryImpl
 import com.noto.data.repository.NotoRepositoryImpl
 import com.noto.data.repository.UserRepositoryImpl
+import com.noto.database.connectDatabase
 import com.noto.database.source.LabelsDSL
-import com.noto.database.source.LibrariesDSL
+import com.noto.database.source.LibraryDao
 import com.noto.database.source.NotosDSL
 import com.noto.database.source.UserDao
 import com.noto.domain.interactor.label.*
 import com.noto.domain.interactor.library.*
 import com.noto.domain.interactor.noto.*
 import com.noto.domain.interactor.user.*
-import com.noto.database.connectDatabase
 import org.koin.dsl.module
 
 fun initDB() {
@@ -21,7 +21,7 @@ fun initDB() {
 
 val repositoryModule = module {
 
-    single { LibraryRepositoryImpl(get<LibrariesDSL>()) }
+    single { LibraryRepositoryImpl(get<LibraryDao>()) }
 
     single { UserRepositoryImpl(get<UserDao>()) }
 
@@ -35,7 +35,7 @@ val dataSourceModule = module {
 
     single { UserDao() }
 
-    single { LibrariesDSL() }
+    single { LibraryDao() }
 }
 
 val libraryUseCasesModule = module {

@@ -12,4 +12,6 @@ interface LibraryDataSource {
 
     suspend fun deleteLibrary(userId: Long, libraryId: Long)
 
+    suspend fun getLibrary(userId: Long, library: Library): Library?
+
 }

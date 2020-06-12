@@ -1,6 +1,6 @@
 package com.noto.app.controller
 
-import com.noto.app.AuthorizationException
+import com.noto.app.BadRequestException
 import com.noto.app.NotFoundException
 import com.noto.app.service.LibraryService
 import com.noto.app.util.respond
@@ -9,8 +9,10 @@ import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
 import io.ktor.auth.jwt.JWTPrincipal
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
+import io.ktor.response.header
 import io.ktor.routing.*
 
 fun Routing.library(libraryService: LibraryService) {
@@ -20,18 +22,22 @@ fun Routing.library(libraryService: LibraryService) {
         route("/libraries") {
 
             get {
-                val userId = call.authentication.principal<JWTPrincipal>()!!.payload.getClaim("userId").asLong()
+
+                val userId = call.authentication.principal<JWTPrincipal>()?.payload?.getClaim("userId")?.asLong()
+                    ?: throw BadRequestException("Missing claims")
 
                 val libraries = libraryService.getLibraries(userId)
 
                 call.respond(HttpStatusCode.OK, true, data = libraries)
+
             }
 
             post {
-                val userId = call.authentication.principal<JWTPrincipal>()!!.payload.getClaim("userId").asLong()
+
+                val userId = call.authentication.principal<JWTPrincipal>()?.payload?.getClaim("userId")?.asLong()
+                    ?: throw BadRequestException("Missing claims")
 
                 val library = call.receive<Library>()
-
 
                 val data = libraryService.createLibrary(userId, library)
 
@@ -40,10 +46,11 @@ fun Routing.library(libraryService: LibraryService) {
             }
 
             patch {
-                val userId = call.authentication.principal<JWTPrincipal>()!!.payload.getClaim("userId").asLong()
+
+                val userId = call.authentication.principal<JWTPrincipal>()?.payload?.getClaim("userId")?.asLong()
+                    ?: throw BadRequestException("Missing claims")
 
                 val library = call.receive<Library>()
-
 
                 val data = libraryService.updateLibrary(userId, library)
 
@@ -51,14 +58,15 @@ fun Routing.library(libraryService: LibraryService) {
             }
 
             delete("/{id}") {
-                val userId = call.authentication.principal<JWTPrincipal>()!!.payload.getClaim("userId").asLong()
+
+                val userId = call.authentication.principal<JWTPrincipal>()?.payload?.getClaim("userId")?.asLong()
+                    ?: throw BadRequestException("Missing claims")
 
                 val libraryId = call.parameters["id"]?.toLong() ?: throw NotFoundException("Invalid ID")
 
-
                 val data = libraryService.deleteLibrary(userId, libraryId)
 
-                call.respond(HttpStatusCode.OK, true, data = data)
+                call.respond(HttpStatusCode.NoContent, true, data = data)
 
             }
         }

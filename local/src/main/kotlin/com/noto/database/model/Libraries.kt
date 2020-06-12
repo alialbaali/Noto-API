@@ -4,7 +4,8 @@ import com.noto.domain.model.NotoColor
 import com.noto.domain.model.NotoIcon
 import com.noto.domain.model.SortMethod
 import com.noto.domain.model.SortType
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.jodatime.date
 
 object Libraries : Table("libraries") {
@@ -13,13 +14,9 @@ object Libraries : Table("libraries") {
 
     val libraryId = long("library_id").autoIncrement()
 
-    val libraryClientId  = long("library_client_id")
+    val libraryClientId = long("library_client_id")
 
-    val userId = long("user_id").references(
-        Users.userId,
-        ReferenceOption.CASCADE,
-        ReferenceOption.CASCADE,
-        "user_id")
+    val userId = reference("user_id", Users.userId, ReferenceOption.CASCADE, ReferenceOption.CASCADE).index()
 
     val libraryTitle = varchar("library_title", 32)
 

@@ -11,8 +11,8 @@ val appModule = module {
 
     single { UserService(get()) }
 
-//    single { LibraryService(get()) }
-//
+    single { LibraryService(get()) }
+
 //    single { NotoService(get()) }
 
 }

@@ -21,6 +21,6 @@ fun connectDatabase() {
         PASSWORD
     )
     transaction {
-        SchemaUtils.create(Users)
+        SchemaUtils.createMissingTablesAndColumns(Users, Libraries)
     }
 }
