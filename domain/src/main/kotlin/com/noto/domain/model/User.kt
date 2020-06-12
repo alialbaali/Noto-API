@@ -9,7 +9,7 @@ data class User(
 
     val userEmail: String,
 
-    var userPassword: String,
+    val userPassword: String,
 
     val userCreationDate : DateTime = DateTime.now()
 )

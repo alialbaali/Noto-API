@@ -30,15 +30,13 @@ class UserService(private val userUseCases: UserUseCases) {
 
         if (user.userDisplayName.isEmpty()) throw BadRequestException("Invalid name")
 
-        if (!user.userPassword.matches(EMAIL_REGEX)) throw BadRequestException("Invalid email")
+        if (!user.userEmail.matches(EMAIL_REGEX)) throw BadRequestException("Invalid email")
 
         if (!user.userPassword.matches(PASSWORD_REGEX)) throw BadRequestException("Invalid password")
 
-        user.apply {
-            userPassword = userPassword.hash()
-        }
+        val dbUser = user.copy(userPassword = user.userPassword.hash())
 
-        return userUseCases.createUser(user).getOrElse {
+        return userUseCases.createUser(dbUser).getOrElse {
             throw AuthenticationException(it.message)
         }
     }
@@ -49,22 +47,18 @@ class UserService(private val userUseCases: UserUseCases) {
 
         if (user.userPassword.isEmpty()) throw BadRequestException("Password is required")
 
-        user.apply {
-            userPassword = userPassword.hash()
-        }
+        val dbUser = user.copy(userPassword = user.userPassword.hash())
 
-        return userUseCases.loginUser(user).getOrElse {
+        return userUseCases.loginUser(dbUser).getOrElse {
             throw AuthenticationException(it.message)
         }
     }
 
     suspend fun updateUser(userId: Long, user: User): User {
 
-        user.apply {
-            userPassword = userPassword.hash()
-        }
+        val dbUser = user.copy(userPassword = user.userPassword.hash())
 
-        return userUseCases.updateUser(userId, user).getOrElse {
+        return userUseCases.updateUser(userId, dbUser).getOrElse {
             throw BadRequestException(it.message)
         }
     }
