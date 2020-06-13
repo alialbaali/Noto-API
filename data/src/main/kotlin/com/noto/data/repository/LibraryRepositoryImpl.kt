@@ -11,7 +11,7 @@ class LibraryRepositoryImpl(private val source: LibraryDataSource) : LibraryRepo
     }
 
     override suspend fun createLibrary(userId: Long, library: Library): Result<Library> {
-        return if (source.getLibrary(userId, library) == null) {
+        return if (source.getLibraryByClientId(userId, library.libraryId) == null) {
             source.createLibrary(userId, library)
             Result.success(library)
         } else {
@@ -20,7 +20,7 @@ class LibraryRepositoryImpl(private val source: LibraryDataSource) : LibraryRepo
     }
 
     override suspend fun updateLibrary(userId: Long, library: Library): Result<Library> {
-        return if(source.getLibrary(userId, library) == null) {
+        return if (source.getLibraryByClientId(userId, library.libraryId) == null) {
             Result.failure(Throwable("Library doesn't exist!"))
         } else {
             source.updateLibrary(userId, library)
@@ -30,7 +30,11 @@ class LibraryRepositoryImpl(private val source: LibraryDataSource) : LibraryRepo
 
 
     override suspend fun deleteLibrary(userId: Long, libraryId: Long): Result<Long> {
-        source.deleteLibrary(userId, libraryId)
-        return Result.success(libraryId)
+        return if (source.getLibraryByClientId(userId, libraryId) == null) {
+            Result.failure(Throwable("Invalid ID"))
+        } else {
+            source.deleteLibrary(userId, libraryId)
+            Result.success(libraryId)
+        }
     }
 }

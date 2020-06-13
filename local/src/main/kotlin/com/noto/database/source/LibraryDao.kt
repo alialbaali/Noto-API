@@ -74,11 +74,11 @@ class LibraryDao : LibraryDataSource {
         }
     }
 
-    override suspend fun getLibrary(userId: Long, library: Library): Library? {
+    override suspend fun getLibraryByClientId(userId: Long, libraryId: Long): Library? {
 
         return transaction {
 
-            Libraries.select { (Libraries.userId eq userId) and (Libraries.libraryClientId eq library.libraryId) }.map {
+            Libraries.select { (Libraries.userId eq userId) and (Libraries.libraryClientId eq libraryId) }.map {
                 Library(
                     libraryId = it[Libraries.libraryClientId],
                     libraryTitle = it[Libraries.libraryTitle],

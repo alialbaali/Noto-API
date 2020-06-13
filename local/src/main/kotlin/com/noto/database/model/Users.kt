@@ -6,7 +6,7 @@ import org.joda.time.DateTime
 
 object Users : Table(name = "users") {
     override val primaryKey: PrimaryKey
-        get() = PrimaryKey(userId, name = "user_id")
+        get() = PrimaryKey(userId)
 
     val userId = long("user_id").autoIncrement()
 

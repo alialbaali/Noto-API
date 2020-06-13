@@ -13,6 +13,6 @@ val appModule = module {
 
     single { LibraryService(get()) }
 
-//    single { NotoService(get()) }
+    single { NotoService(get()) }
 
 }

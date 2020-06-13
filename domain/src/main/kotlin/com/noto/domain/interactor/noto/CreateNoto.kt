@@ -5,6 +5,6 @@ import com.noto.domain.repository.NotoRepository
 
 class CreateNoto(private val notoRepository: NotoRepository) {
 
-    suspend operator fun invoke(noto: Noto) = notoRepository.createNoto(noto)
+    suspend operator fun invoke(userId: Long, noto: Noto) = notoRepository.createNoto(userId, noto)
 
 }

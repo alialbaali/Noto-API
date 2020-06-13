@@ -11,6 +11,7 @@ import io.ktor.auth.authentication
 import io.ktor.auth.jwt.JWTPrincipal
 import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
+import io.ktor.request.receiveOrNull
 import io.ktor.routing.*
 import io.ktor.util.KtorExperimentalAPI
 
@@ -21,7 +22,7 @@ fun Routing.user(userService: UserService) {
 
         post("/create") {
 
-            val user = call.receive<User>()
+            val user = call.receiveOrNull<User>() ?: throw BadRequestException("Missing body")
 
             val data = userService.createUser(user).getResponse()
 
@@ -30,7 +31,7 @@ fun Routing.user(userService: UserService) {
 
         post("/login") {
 
-            val user = call.receive<User>()
+            val user = call.receiveOrNull<User>() ?: throw BadRequestException("Missing body")
 
             val data = userService.loginUser(user).getResponse()
 
@@ -41,7 +42,7 @@ fun Routing.user(userService: UserService) {
 
             patch {
 
-                val user = call.receive<User>()
+                val user = call.receiveOrNull<User>() ?: throw BadRequestException("Missing body")
 
                 val userId = call.authentication.principal<JWTPrincipal>()?.payload?.getClaim("userId")?.asLong()
                     ?: throw BadRequestException("Missing claims")

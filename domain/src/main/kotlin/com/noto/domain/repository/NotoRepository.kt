@@ -4,11 +4,11 @@ import com.noto.domain.model.Noto
 
 interface NotoRepository {
 
-    suspend fun createNoto(noto: Noto)
+    suspend fun createNoto(userId: Long, noto: Noto): Result<Noto>
 
-    suspend fun deleteNoto(notoId: Long)
+    suspend fun updateNoto(userId: Long, noto: Noto): Result<Noto>
 
-    suspend fun updateNoto(noto: Noto)
+    suspend fun deleteNoto(userId: Long, libraryClientId: Long, notoId: Long): Result<Long>
 
-    suspend fun getNotos(userId: Long, libraryId: Long) : Result<List<Noto>>
+    suspend fun getNotos(userId: Long): Result<List<Noto>>
 }

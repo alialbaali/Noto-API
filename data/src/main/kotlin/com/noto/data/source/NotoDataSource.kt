@@ -6,9 +6,11 @@ interface NotoDataSource {
 
     suspend fun createNoto(userId: Long, noto: Noto)
 
-    suspend fun getNotos(userId: Long, libraryId: Long): List<Noto>
+    suspend fun getNotos(userId: Long): List<Noto>
 
-    suspend fun deleteNoto(notoId: Long)
+    suspend fun updateNoto(userId: Long, noto: Noto)
 
-    suspend fun updateNoto(noto: Noto)
+    suspend fun deleteNoto(userId: Long, libraryClientId: Long, notoId: Long)
+
+    suspend fun getNotoByClientId(userId: Long, libraryClientId: Long, notoId: Long): Noto?
 }

@@ -2,9 +2,8 @@ package com.noto.database.model
 
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.jodatime.date
 import org.jetbrains.exposed.sql.jodatime.datetime
-import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
 
 object Notos : Table("notos") {
     override val primaryKey: PrimaryKey?
@@ -14,12 +13,7 @@ object Notos : Table("notos") {
 
     val notoClientId = long("noto_client_id")
 
-    val libraryId = long("library_id").references(
-        Libraries.libraryId,
-        ReferenceOption.CASCADE,
-        ReferenceOption.CASCADE,
-        "library_id"
-    )
+    val libraryId = reference("library_id", Libraries.libraryId, ReferenceOption.CASCADE, ReferenceOption.CASCADE).index()
 
     val notoTitle = text("noto_title")
 
@@ -27,10 +21,10 @@ object Notos : Table("notos") {
 
     val notoPosition = integer("noto_position")
 
-    val notoCreationDate = datetime("noto_creation_date").default(DateTime.now(DateTimeZone.getDefault()))
+    val notoCreationDate = date("noto_creation_date")
 
     val notoIsStarred = bool("noto_is_starred").default(false)
 
-    val notoReminder = datetime("noto_reminder").nullable()
+    val notoReminderDate = datetime("noto_reminder_date").nullable()
 }
 

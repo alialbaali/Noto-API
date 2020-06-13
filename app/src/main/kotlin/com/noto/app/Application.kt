@@ -3,8 +3,10 @@ package com.noto.app
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.noto.app.controller.label
 import com.noto.app.controller.library
+import com.noto.app.controller.noto
 import com.noto.app.controller.user
 import com.noto.app.service.LibraryService
+import com.noto.app.service.NotoService
 import com.noto.app.service.UserService
 import com.noto.app.util.jwtVerifier
 import com.noto.app.util.respond
@@ -40,7 +42,7 @@ fun Application.main(testing: Boolean = false) {
 
     val libraryService by inject<LibraryService>()
 
-//    val notoService by inject<NotoService>()
+    val notoService by inject<NotoService>()
 
     initDB()
 
@@ -124,8 +126,8 @@ fun Application.main(testing: Boolean = false) {
         }
         user(userService)
         library(libraryService)
-//        noto(notoService)
-        label()
+        noto(notoService)
+//        label()
     }
 }
 

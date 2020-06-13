@@ -4,6 +4,6 @@ import com.noto.domain.repository.NotoRepository
 
 class GetNotos(private val notoRepository: NotoRepository) {
 
-    suspend operator fun invoke(libraryId: Long) = notoRepository.getNotos(libraryId, 0)
+    suspend operator fun invoke(userId: Long) = notoRepository.getNotos(userId)
 
 }
