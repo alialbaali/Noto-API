@@ -29,8 +29,6 @@ object Libraries : Table("libraries") {
     val sortMethod = enumeration("sort_method", SortMethod::class)
 
     val sortType = enumeration("sort_type", SortType::class)
-
-    val libraryCreationDate = date("library_creation_date")
 }
 
 

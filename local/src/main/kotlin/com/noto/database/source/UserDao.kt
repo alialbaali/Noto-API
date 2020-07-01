@@ -43,7 +43,7 @@ class UserDao : UserDataSource {
                         it[Users.userId],
                         it[Users.userDisplayName],
                         it[Users.userEmail],
-                        String()
+                        it[Users.userPassword]
                     )
                 }.firstOrNull()
 
@@ -59,7 +59,7 @@ class UserDao : UserDataSource {
                         it[Users.userId],
                         it[Users.userDisplayName],
                         it[Users.userEmail],
-                        String()
+                        it[Users.userPassword]
                     )
                 }.firstOrNull()
 

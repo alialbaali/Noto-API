@@ -15,7 +15,5 @@ object Users : Table(name = "users") {
     val userEmail = varchar("user_email", 64).uniqueIndex()
 
     val userPassword = varchar("user_password", 256)
-
-    val userCreationDate = date("user_creation_date").default(DateTime.now())
 }
 

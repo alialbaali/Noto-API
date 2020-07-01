@@ -1,15 +1,12 @@
 package com.noto.di
 
-import com.noto.data.repository.LabelRepositoryImpl
 import com.noto.data.repository.LibraryRepositoryImpl
 import com.noto.data.repository.NotoRepositoryImpl
 import com.noto.data.repository.UserRepositoryImpl
 import com.noto.database.connectDatabase
-import com.noto.database.source.LabelsDSL
 import com.noto.database.source.LibraryDao
 import com.noto.database.source.NotoDao
 import com.noto.database.source.UserDao
-import com.noto.domain.interactor.label.*
 import com.noto.domain.interactor.library.*
 import com.noto.domain.interactor.noto.*
 import com.noto.domain.interactor.user.*
@@ -26,8 +23,6 @@ val repositoryModule = module {
     single { UserRepositoryImpl(get<UserDao>()) }
 
     single { NotoRepositoryImpl(get<NotoDao>()) }
-
-    single { LabelRepositoryImpl(get<LabelsDSL>()) }
 
 }
 
@@ -81,19 +76,4 @@ val notoUseCasesModule = module {
     single { UpdateNoto(get<NotoRepositoryImpl>()) }
 
     single { GetNotos(get<NotoRepositoryImpl>()) }
-}
-
-val labelUseCasesModule = module {
-
-    single { LabelUseCases(get(), get(), get(), get(), get()) }
-
-    single { CreateLabel(get<LabelRepositoryImpl>()) }
-
-    single { DeleteLabel(get<LabelRepositoryImpl>()) }
-
-    single { UpdateLabel(get<LabelRepositoryImpl>()) }
-
-    single { GetLabelById(get<LabelRepositoryImpl>()) }
-
-    single { GetLabels(get<LabelRepositoryImpl>()) }
 }

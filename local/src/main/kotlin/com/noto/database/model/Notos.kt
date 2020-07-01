@@ -21,10 +21,6 @@ object Notos : Table("notos") {
 
     val notoPosition = integer("noto_position")
 
-    val notoCreationDate = date("noto_creation_date")
-
     val notoIsStarred = bool("noto_is_starred").default(false)
-
-    val notoReminderDate = datetime("noto_reminder_date").nullable()
 }
 

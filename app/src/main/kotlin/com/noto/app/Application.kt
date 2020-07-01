@@ -1,7 +1,7 @@
 package com.noto.app
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.noto.app.controller.label
 import com.noto.app.controller.library
 import com.noto.app.controller.noto
 import com.noto.app.controller.user
@@ -59,8 +59,7 @@ fun Application.main(testing: Boolean = false) {
             dataSourceModule,
             userUseCasesModule,
             libraryUseCasesModule,
-            notoUseCasesModule,
-            labelUseCasesModule
+            notoUseCasesModule
         )
     }
 
@@ -81,6 +80,7 @@ fun Application.main(testing: Boolean = false) {
     install(ContentNegotiation) {
         jackson {
             enable(SerializationFeature.INDENT_OUTPUT)
+            disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
         }
     }
 
@@ -127,7 +127,6 @@ fun Application.main(testing: Boolean = false) {
         user(userService)
         library(libraryService)
         noto(notoService)
-//        label()
     }
 }
 

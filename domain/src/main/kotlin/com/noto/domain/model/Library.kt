@@ -1,7 +1,5 @@
 package com.noto.domain.model
 
-import org.joda.time.DateTime
-
 
 data class Library(
 
@@ -17,7 +15,5 @@ data class Library(
 
     val sortType: SortType = SortType.DESC,
 
-    val sortMethod: SortMethod = SortMethod.CreationDate,
-
-    val libraryCreationDate: DateTime = DateTime.now()
+    val sortMethod: SortMethod = SortMethod.CreationDate
 )

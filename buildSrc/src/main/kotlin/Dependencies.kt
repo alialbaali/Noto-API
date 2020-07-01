@@ -35,6 +35,8 @@ object Libraries {
     const val CONTENT_NEGOTIATION = "io.ktor:ktor-jackson:${Versions.KTOR}"
 
     const val JAKARTA_MAIL = "com.sun.mail:jakarta.mail:${Versions.JAKARTA_MAIL}"
+    
+    const val JACKSON_DATE = "com.fasterxml.jackson.datatype:jackson-datatype-joda:${Versions.JACKSON_DATE}"
 
 }
 
@@ -44,11 +46,12 @@ private object Versions {
     const val LOG_BACK = "1.2.1"
     const val KOIN = "2.1.5"
     const val COROUTINES = "1.3.3"
-    const val EXPOSED = "0.25.1"
+    const val EXPOSED = "0.26.1"
     const val JODA_TIME = "2.10.6"
     const val SLF4J = "1.7.30"
     const val POSTGRESQL = "42.2.2"
     const val JAKARTA_MAIL = "1.6.5"
+    const val JACKSON_DATE = "2.11.1"
 }
 
 

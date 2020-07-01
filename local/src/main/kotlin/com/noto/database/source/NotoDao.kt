@@ -21,8 +21,6 @@ class NotoDao : NotoDataSource {
                 it[notoBody] = noto.notoBody
                 it[notoPosition] = noto.notoPosition
                 it[notoIsStarred] = noto.notoIsStarred
-                it[notoCreationDate] = noto.notoCreationDate
-                it[notoReminderDate] = noto.notoReminder
             }
 
         }
@@ -39,9 +37,7 @@ class NotoDao : NotoDataSource {
                         it[Notos.notoTitle],
                         it[Notos.notoBody],
                         it[Notos.notoPosition],
-                        it[Notos.notoCreationDate],
-                        it[Notos.notoIsStarred],
-                        it[Notos.notoReminderDate]
+                        it[Notos.notoIsStarred]
                     )
                 }
         }
@@ -68,8 +64,6 @@ class NotoDao : NotoDataSource {
                 it[notoBody] = noto.notoBody
                 it[notoPosition] = noto.notoPosition
                 it[notoIsStarred] = noto.notoIsStarred
-                it[notoCreationDate] = noto.notoCreationDate
-                it[notoReminderDate] = noto.notoReminder
             }
         }
     }
@@ -93,9 +87,7 @@ class NotoDao : NotoDataSource {
                         it[Notos.notoTitle],
                         it[Notos.notoBody],
                         it[Notos.notoPosition],
-                        it[Notos.notoCreationDate],
-                        it[Notos.notoIsStarred],
-                        it[Notos.notoReminderDate]
+                        it[Notos.notoIsStarred]
                     )
                 }.firstOrNull()
         }

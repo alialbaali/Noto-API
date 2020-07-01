@@ -20,8 +20,7 @@ class LibraryDao : LibraryDataSource {
                     notoColor = it[Libraries.notoColor],
                     notoIcon = it[Libraries.notoIcon],
                     sortType = it[Libraries.sortType],
-                    sortMethod = it[Libraries.sortMethod],
-                    libraryCreationDate = it[Libraries.libraryCreationDate]
+                    sortMethod = it[Libraries.sortMethod]
                 )
             }
 
@@ -41,7 +40,6 @@ class LibraryDao : LibraryDataSource {
                 it[notoIcon] = library.notoIcon
                 it[sortMethod] = library.sortMethod
                 it[sortType] = library.sortType
-                it[libraryCreationDate] = library.libraryCreationDate
             }
 
         }
@@ -86,8 +84,7 @@ class LibraryDao : LibraryDataSource {
                     notoColor = it[Libraries.notoColor],
                     notoIcon = it[Libraries.notoIcon],
                     sortType = it[Libraries.sortType],
-                    sortMethod = it[Libraries.sortMethod],
-                    libraryCreationDate = it[Libraries.libraryCreationDate]
+                    sortMethod = it[Libraries.sortMethod]
                 )
             }.firstOrNull()
 
