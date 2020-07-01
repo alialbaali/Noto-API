@@ -67,8 +67,8 @@ object Modules {
 }
 
 object App {
-    const val APP_GROUP = "com.alialbaali.chatychaty"
-    const val APP_NAME = "ChatyChaty"
+    const val APP_GROUP = "com.api-noto"
+    const val APP_NAME = "Noto-API"
     const val APP_VERSION = "0.0.5"
 }
 

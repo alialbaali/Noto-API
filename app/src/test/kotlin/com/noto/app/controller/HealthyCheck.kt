@@ -21,38 +21,38 @@ fun Any.toJson(): String = objectMapper.writerWithDefaultPrettyPrinter().writeVa
 @KtorExperimentalAPI
 class HealthyCheck {
 
+//
+//    private val healthResponse = ResponseSchema(true, null, "Healthy").toJson()
+//
+//    private val user =
+//        User(userDisplayName = "Ali", userEmail = "aliabaali@gmail.com", userPassword = "ThisPassword0!3").toJson()
+//
+//
+//    @Test
+//    fun test_health_check(): Unit = withTestApplication({ main(testing = true) }) {
+//
+//        with(handleRequest(HttpMethod.Get, "/")) {
+//
+//            assertEquals(HttpStatusCode.OK, response.status())
+//            assertEquals(healthResponse, response.content)
+//
+//        }
+//
+//    }
 
-    private val healthResponse = ResponseSchema(true, null, "Healthy").toJson()
 
-    private val user =
-        User(userDisplayName = "Ali", userEmail = "aliabaali@gmail.com", userPassword = "ThisPassword0!3").toJson()
-
-
-    @Test
-    fun test_health_check(): Unit = withTestApplication({ main(testing = true) }) {
-
-        with(handleRequest(HttpMethod.Get, "/")) {
-
-            assertEquals(HttpStatusCode.OK, response.status())
-            assertEquals(healthResponse, response.content)
-
-        }
-
-    }
-
-
-    @Test
-    fun test_create_user(): Unit = withTestApplication({ main(testing = false) }) {
-        handleRequest {
-            method = HttpMethod.Post
-            uri = "/user/create"
-            setBody(user)
-        }.apply {
-            println(response.content)
-//                println(response.status())
-//                assertEquals(HttpStatusCode.OK, response.status())
-        }
-    }
+//    @Test
+//    fun test_create_user(): Unit = withTestApplication({ main(testing = false) }) {
+//        handleRequest {
+//            method = HttpMethod.Post
+//            uri = "/user/create"
+//            setBody(user)
+//        }.apply {
+//            println(response.content)
+////                println(response.status())
+////                assertEquals(HttpStatusCode.OK, response.status())
+//        }
+//    }
 
 //    @KtorExperimentalAPI
 //    @Test
